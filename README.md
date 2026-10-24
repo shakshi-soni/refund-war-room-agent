@@ -1,14 +1,14 @@
-##Refund War Room
+# Refund War Room
 
-An evidence-backed refund investigation agent that answers operational questions using a synthetic orders/refunds database and internal policy documents.
+An evidence-backed refund investigation agent. It answers operational questions using a synthetic orders/refunds database and internal policy documents.
 
-##1. Summary
+## Summary
 
-Refund investigations often require information from multiple sources. A database can provide transaction counts, while policy documents explain the rules that apply to a particular date. Using only one source can produce incomplete or incorrect answers.
+Refund questions need more than one source: the database gives counts, the policy docs give the rules for a given date. Using only one gives incomplete or wrong answers.
 
-Refund War Room combines read-only SQL queries and document retrieval to investigate questions, attach evidence to factual claims, and abstain when the available evidence is insufficient or conflictin
+Refund War Room combines read-only SQL with document retrieval, attaches evidence to every factual claim, and abstains when evidence is insufficient or conflicting.
 
-2. Architecture
+## Architecture
 
 problem-2/
 ├── README.md
@@ -18,88 +18,64 @@ problem-2/
 ├── generate_data.py
 ├── run_eval.py
 ├── data/
-│   ├── bazaar.db
-│   ├── eval_questions.json
-│   └── docs/
+│ ├── bazaar.db
+│ ├── eval_questions.json
+│ └── docs/
 ├── agent/
-│   ├── state_machine.py
-│   ├── verifier.py
-│   ├── conflict_policy.py
-│   ├── injection_gate.py
-│   └── schema.py
+│ ├── state_machine.py
+│ ├── verifier.py
+│ ├── conflict_policy.py
+│ ├── injection_gate.py
+│ └── schema.py
 ├── tools/
-│   ├── sql_tool.py
-│   ├── doc_tools.py
-│   ├── whatsapp_tool.py
-│   └── fault_wrapper.py
+│ ├── sql_tool.py
+│ ├── doc_tools.py
+│ ├── whatsapp_tool.py
+│ └── fault_wrapper.py
 ├── tests/
-│   ├── test_verifier.py
-│   └── test_injection_gate.py
+│ ├── test_verifier.py
+│ └── test_injection_gate.py
 └── logs/
-    └── whatsapp_log.txt
+└── whatsapp_log.txt
 
-3. Setup
 
-Requirements
+## Setup
 
-Python 3
+Requirements: Python 3, pip, a terminal. No LLM API key needed (rule-based).
 
-pip
-
-A terminal
-
-The project files in this repository
-
-No external LLM API key is required for the rule-based implementation described here.
-
-Create a virtual environment
-
-Windows PowerShell:
-
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+```
 
+## How to run
 
-5. How to run
+```powershell
+python -m agent.state_machine            # interactive agent (type exit to quit)
+python -m pytest tests/test_verifier.py -v   # verifier tests
+python -m pytest tests/ -v               # full suite
+python run_eval.py                       # evaluation
+```
 
-Run the interactive agent:
+## Design decisions
 
-python -m agent.state_machine
+- **Rule-based planning:** Explicit routing, easy to inspect and reproduce. Keyword routing can miss rephrased or complex questions.
+- **Read-only SQL:** Rejects writes and multiple statements; allows valid read-only queries.
+- **Evidence-backed claims:** Each claim cites a document quote or SQL result. SQL evidence carries a result hash so the verifier can catch mismatches. The hash proves integrity, not that the claim follows from the rows.
+- **Policy conflicts:** The agent checks the requested date, finds applicable versions, and applies precedence only when metadata supports it. Otherwise it surfaces the conflict.
 
-Enter a question at the prompt. Type exit to stop the session.
+## Known limitations
 
-Run the verifier tests:
+- Keyword routing is brittle on paraphrased questions.
+- No multi-step reasoning beyond the rules.
+- SQL safety only covers known patterns.
+- Tested on synthetic data only.
 
-python -m pytest tests/test_verifier.py -v
+## AI-use note 
 
-Run the complete test suite:
-
-python -m pytest tests/ -v
-
-Run the evaluation:
-
-python run_eval.py
-
-7. Design decisions and trade-offs
-
-Rule-based planning
-
-The current implementation uses explicit routing rules rather than relying on an LLM to decide every action. This makes the workflow easier to inspect and reproduce, but keyword-based routing can miss differently worded questions or questions that require more complex reasoning.
-
-Read-only SQL
-
-Database access is restricted to investigation queries. This reduces the risk of changing synthetic records while answering questions. The safety checks must reject write operations and multiple statements while permitting valid read-only queries.
-
-Evidence-backed claims
-
-Factual claims should cite the document quotation or SQL result that supports them. SQL evidence includes a result hash so that the verifier can detect a mismatch between the cited hash and the returned rows.
-
-A hash establishes result integrity within this workflow; it does not, by itself, establish that a claim follows logically from those rows.
-
-Policy conflicts and effective dates
-
-Policy documents can change over time. The agent should evaluate the requested date, identify applicable versions, and apply an explicit precedence rule only when the available metadata supports it. If the rule cannot determine which policy governs, the agent should surface the conflict rather than silently choose a version.
-
-8. Known limitations and failure cases
+- for creating the fake database.
+- upgrading the policy.
+- draft the baseline SQL/schema to save time on boilerplate setup
+- I treated the AI like an interactive documentation or query assistant to help map out the entity relationships faster
