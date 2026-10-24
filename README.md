@@ -1,8 +1,8 @@
-Refund War Room
+##Refund War Room
 
 An evidence-backed refund investigation agent that answers operational questions using a synthetic orders/refunds database and internal policy documents.
 
-1. Summary
+##1. Summary
 
 Refund investigations often require information from multiple sources. A database can provide transaction counts, while policy documents explain the rules that apply to a particular date. Using only one source can produce incomplete or incorrect answers.
 
