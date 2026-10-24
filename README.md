@@ -10,33 +10,7 @@ Refund War Room combines read-only SQL with document retrieval, attaches evidenc
 
 ## Architecture
 
-problem-2/
-├── README.md
-├── requirements.txt
-├── .env.example
-├── .gitignore
-├── generate_data.py
-├── run_eval.py
-├── data/
-│ ├── bazaar.db
-│ ├── eval_questions.json
-│ └── docs/
-├── agent/
-│ ├── state_machine.py
-│ ├── verifier.py
-│ ├── conflict_policy.py
-│ ├── injection_gate.py
-│ └── schema.py
-├── tools/
-│ ├── sql_tool.py
-│ ├── doc_tools.py
-│ ├── whatsapp_tool.py
-│ └── fault_wrapper.py
-├── tests/
-│ ├── test_verifier.py
-│ └── test_injection_gate.py
-└── logs/
-└── whatsapp_log.txt
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/7400b52a-51f8-46e0-b17e-683d6e8d49fe" />
 
 
 ## Setup
