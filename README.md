@@ -40,6 +40,12 @@ python run_eval.py                       # evaluation
 - **Evidence-backed claims:** Each claim cites a document quote or SQL result. SQL evidence carries a result hash so the verifier can catch mismatches. The hash proves integrity, not that the claim follows from the rows.
 - **Policy conflicts:** The agent checks the requested date, finds applicable versions, and applies precedence only when metadata supports it. Otherwise it surfaces the conflict.
 
+## output example
+
+QUESTION: what is replacement policy?
+ANSWER: <img width="1571" height="958" alt="image" src="https://github.com/user-attachments/assets/fe8ba661-6c80-4377-b5b1-6fd613e6a845" />
+
+
 ## Known limitations
 
 - Keyword routing is brittle on paraphrased questions.
