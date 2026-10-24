@@ -1,0 +1,3 @@
+Support note:
+Several customers reported confusion about UPI refund status.
+The number of affected orders has not been independently verified.

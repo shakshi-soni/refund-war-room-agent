@@ -1,0 +1,5 @@
+Policy-Name: Return Window
+Effective-From: 2026-05-01
+Effective-To: open
+
+The return window is 14 days.

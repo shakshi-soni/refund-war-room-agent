@@ -1,0 +1,3 @@
+Warehouse note:
+Some parcels were marked delivered before the customer received them.
+The affected pincode list has not been confirmed.

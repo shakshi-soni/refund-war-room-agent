@@ -1,0 +1,3 @@
+Support note:
+Card refunds can take time to appear in the customer's account.
+No verified processing-time figure is provided in this note.

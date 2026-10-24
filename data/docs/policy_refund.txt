@@ -1,0 +1,5 @@
+Policy-Name: Refund Policy
+Effective-From: 2026-01-01
+Effective-To: open
+
+Approved refunds are processed after eligibility checks.

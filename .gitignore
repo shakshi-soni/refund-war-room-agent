@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Generated data and logs 
+data/bazaar.db
+logs/
+
+.vscode/
+.idea/
+.DS_Store

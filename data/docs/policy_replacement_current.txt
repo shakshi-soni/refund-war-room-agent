@@ -1,0 +1,5 @@
+Policy-Name: Replacement Policy
+Effective-From: 2026-09-01
+Effective-To: open
+
+Replacement requests must be submitted within 5 days of delivery.

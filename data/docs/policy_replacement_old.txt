@@ -1,0 +1,5 @@
+Policy-Name: Replacement Policy
+Effective-From: 2026-01-01
+Effective-To: 2026-03-31
+
+Sellers may offer replacement within 7 days of delivery.
